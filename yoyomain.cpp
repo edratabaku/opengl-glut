@@ -3,8 +3,9 @@
 #include <cmath>
 
 float qr;
-int height = 100;
+int height = 100; //height of the yoyo string
 
+//initializes the viewport
 void initDraw(){
 	glClearColor(0.0,0.0,0.0,1.0);
 	glViewport(0,0,400,400);
@@ -12,6 +13,7 @@ void initDraw(){
 }
 int fx=0, fy=300, sx=fx, sy=fy;
 
+//method that draws a circle
 void drawCircle(int x, int y, int r){
 	glBegin(GL_POLYGON);
 	glTranslatef(0.0,0.0,0.0);
@@ -25,6 +27,7 @@ void drawCircle(int x, int y, int r){
 	glEnd();
 }
 
+//displays the yoyo in three dimensions 
 void display(){
 	glClear(GL_COLOR_BUFFER_BIT);
 	glBegin(GL_LINE_STRIP);
@@ -41,23 +44,25 @@ void display(){
 	glPopMatrix();
 	glFlush();
 }
-bool poshte=1;
+bool poshte=1; //if the yoyo is going downwards
 
 void update(int value){
 	if(poshte){
-		sy = sy-10;
-		if(sy<=0){
+		sy = sy-10; //go lower
+		if(sy<=0){ //if the yoyo is on the "ground"
 			poshte= false;
 		}
 	}
+	//if the yoyo is going upwards
 	if(!poshte){
-		sy+=10;
-		if(sy>=300)
+		sy+=10; //go higher
+		if(sy>=300) //at highest point start going lower
 		poshte=true;
 	}
 	glutPostRedisplay();
-	glutTimerFunc(90,update,0);
+	glutTimerFunc(90,update,0); //timer function that executes the method each 90ms
 }
+//main function
 int main(int argc, char*argv[]){
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_SINGLE|GLUT_RGB);
